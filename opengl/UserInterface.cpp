@@ -4,151 +4,134 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 
+#include "UserInterface.h"
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-#include "UserInterface.h"
 
-void UserInterface::init(OGLRenderData& renderData) {
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGui_ImplGlfw_InitForOpenGL(renderData.rdWindow, true);
-	const char* glslVersion = "#version 460 core";
-	ImGui_ImplOpenGL3_Init(glslVersion);
-
+void UserInterface::init(OGLRenderData &renderData) {
+  IMGUI_CHECKVERSION();
+  ImGui::CreateContext();
+  ImGui_ImplGlfw_InitForOpenGL(renderData.rdWindow, true);
+  const char *glslVersion = "#version 460 core";
+  ImGui_ImplOpenGL3_Init(glslVersion);
 }
 
 void UserInterface::cleanup() {
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
+  ImGui_ImplOpenGL3_Shutdown();
+  ImGui_ImplGlfw_Shutdown();
+  ImGui::DestroyContext();
 }
 
-void UserInterface::createFrame(OGLRenderData& renderData) {
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
-	ImGui::NewFrame();
-	ImGuiWindowFlags imguiWindowFlags = 0;
-	ImGui::SetNextWindowBgAlpha(0.8f);
-	ImGui::Begin("Control", nullptr, imguiWindowFlags);
-	static float newFps = 0.0f;
-	if (renderData.rdFrameTime > 0.0) {
-		newFps = 1.0f / renderData.rdFrameTime;
-	}
-	framesPerSecond = (averagingAlpha * framesPerSecond) +
-		(1.0f - averagingAlpha) * newFps;
-	ImGui::Text("FPS:");
-	ImGui::SameLine();
-	ImGui::Text(std::to_string(framesPerSecond).c_str());
-	ImGui::Separator();
-	ImGui::Text("Triangles:");
-	ImGui::SameLine();
-	ImGui::Text(
-		std::to_string(renderData.rdTriangleCount).c_str());
-	std::string windowDims =
-		std::to_string(renderData.rdWidth) + "x" +
-		std::to_string(renderData.rdHeight);
-	ImGui::Text("Window Dimensions:");
-	ImGui::SameLine();
-	ImGui::Text(windowDims.c_str());
-	std::string imgWindowPos =
-		std::to_string(static_cast<int>(
-			ImGui::GetWindowPos().x)) + "/" +
-		std::to_string(static_cast<int>(
-			ImGui::GetWindowPos().y));
-	ImGui::Text("ImGui Window Position:");
-	ImGui::SameLine();
-	ImGui::Text(imgWindowPos.c_str());
-	ImGui::Text("Matrix Generation Time:");
-	ImGui::SameLine();
-	ImGui::Text(std::to_string
-	(renderData.rdMatrixGenerateTime).c_str());
-	ImGui::Text("Matrix Upload Time:");
-	ImGui::SameLine();
-	ImGui::Text(std::to_string
-	(renderData.rdMatrixUploadTime).c_str());
-	ImGui::SameLine();
-	ImGui::Text("ms");
-	ImGui::SameLine();
-	ImGui::Text("ms");
-	ImGui::Text("UI Generation Time:");
-	ImGui::SameLine();
-	ImGui::Text(std::to_string
-	(renderData.rdUIGenerateTime).c_str());
-	ImGui::SameLine();
-	ImGui::Text("ms");
-	ImGui::Text("UI Draw Time:");
-	ImGui::SameLine();
-	ImGui::Text(std::to_string
-	(renderData.rdUIDrawTime).c_str());
-	ImGui::SameLine();
-	ImGui::Text("ms");
-	ImGui::Separator();
-	ImGui::Text("View Azimuth:");
-	ImGui::SameLine();
-	ImGui::Text("%s", std::to_string
-	(renderData.rdViewAzimuth).c_str());
-	ImGui::Text("View Elevation:");
-	ImGui::SameLine();
-	ImGui::Text("%s", std::to_string
-	(renderData.rdViewElevation).c_str());
-	ImGui::Text("Camera Position:");
-	ImGui::SameLine();
-	ImGui::Text("%s", glm::to_string(renderData.rdCameraWorldPosition).c_str());
-	ImGui::Separator();
-	ImGui::Separator();
-	static bool checkBoxChecked = false;
-	ImGui::Checkbox("Check Me", &checkBoxChecked);
-	if (checkBoxChecked) {
-		ImGui::SameLine();
-		ImGui::PushStyleColor(ImGuiCol_Text,
-			IM_COL32(0, 255, 0, 255));
-		ImGui::Text("Yes");
-		ImGui::PopStyleColor();
-	}
-	if (ImGui::Button("Toggle Shader")) {
-		renderData.rdUseChangedShader =
-			!renderData.rdUseChangedShader;
-	}
-	ImGui::SameLine();
-	if (!renderData.rdUseChangedShader) {
-		ImGui::Text("Basic Shader");
-	}
-	else {
-		ImGui::Text("Changed Shader");
-	}
-	ImGui::Separator();
-	ImGui::Text("Field of View");
-	ImGui::SameLine();
-	ImGui::SliderInt("##FOV", &renderData.rdFieldOfView,
-		40, 150);
+void UserInterface::createFrame(OGLRenderData &renderData) {
+  ImGui_ImplOpenGL3_NewFrame();
+  ImGui_ImplGlfw_NewFrame();
+  ImGui::NewFrame();
+  ImGuiWindowFlags imguiWindowFlags = 0;
+  ImGui::SetNextWindowBgAlpha(0.8f);
+  ImGui::Begin("Control", nullptr, imguiWindowFlags);
+  static float newFps = 0.0f;
+  if (renderData.rdFrameTime > 0.0) {
+    newFps = 1.0f / renderData.rdFrameTime;
+  }
+  framesPerSecond =
+      (averagingAlpha * framesPerSecond) + (1.0f - averagingAlpha) * newFps;
+  ImGui::Text("FPS:");
+  ImGui::SameLine();
+  ImGui::Text(std::to_string(framesPerSecond).c_str());
+  ImGui::Separator();
+  ImGui::Text("Triangles:");
+  ImGui::SameLine();
+  ImGui::Text(std::to_string(renderData.rdTriangleCount).c_str());
+  std::string windowDims = std::to_string(renderData.rdWidth) + "x" +
+                           std::to_string(renderData.rdHeight);
+  ImGui::Text("Window Dimensions:");
+  ImGui::SameLine();
+  ImGui::Text(windowDims.c_str());
+  std::string imgWindowPos =
+      std::to_string(static_cast<int>(ImGui::GetWindowPos().x)) + "/" +
+      std::to_string(static_cast<int>(ImGui::GetWindowPos().y));
+  ImGui::Text("ImGui Window Position:");
+  ImGui::SameLine();
+  ImGui::Text(imgWindowPos.c_str());
+  ImGui::Text("Matrix Generation Time:");
+  ImGui::SameLine();
+  ImGui::Text(std::to_string(renderData.rdMatrixGenerateTime).c_str());
+  ImGui::Text("Matrix Upload Time:");
+  ImGui::SameLine();
+  ImGui::Text(std::to_string(renderData.rdMatrixUploadTime).c_str());
+  ImGui::SameLine();
+  ImGui::Text("ms");
+  ImGui::SameLine();
+  ImGui::Text("ms");
+  ImGui::Text("UI Generation Time:");
+  ImGui::SameLine();
+  ImGui::Text(std::to_string(renderData.rdUIGenerateTime).c_str());
+  ImGui::SameLine();
+  ImGui::Text("ms");
+  ImGui::Text("UI Draw Time:");
+  ImGui::SameLine();
+  ImGui::Text(std::to_string(renderData.rdUIDrawTime).c_str());
+  ImGui::SameLine();
+  ImGui::Text("ms");
+  ImGui::Separator();
+  ImGui::Text("View Azimuth:");
+  ImGui::SameLine();
+  ImGui::Text("%s", std::to_string(renderData.rdViewAzimuth).c_str());
+  ImGui::Text("View Elevation:");
+  ImGui::SameLine();
+  ImGui::Text("%s", std::to_string(renderData.rdViewElevation).c_str());
+  ImGui::Text("Camera Position:");
+  ImGui::SameLine();
+  ImGui::Text("%s", glm::to_string(renderData.rdCameraWorldPosition).c_str());
+  ImGui::Separator();
+  ImGui::Separator();
+  static bool checkBoxChecked = false;
+  ImGui::Checkbox("Check Me", &checkBoxChecked);
+  if (checkBoxChecked) {
+    ImGui::SameLine();
+    ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+    ImGui::Text("Yes");
+    ImGui::PopStyleColor();
+  }
+  if (ImGui::Button("Toggle Shader")) {
+    renderData.rdUseChangedShader = !renderData.rdUseChangedShader;
+  }
+  ImGui::SameLine();
+  if (!renderData.rdUseChangedShader) {
+    ImGui::Text("Basic Shader");
+  } else {
+    ImGui::Text("Changed Shader");
+  }
+  ImGui::Separator();
+  ImGui::Text("Field of View");
+  ImGui::SameLine();
+  ImGui::SliderInt("##FOV", &renderData.rdFieldOfView, 40, 150);
 
-	ImGui::Text("%s",
-		std::to_string(renderData.rdTriangleCount +
-			renderData.rdGltfTriangleCount).c_str());
+  ImGui::Text("%s", std::to_string(renderData.rdTriangleCount +
+                                   renderData.rdGltfTriangleCount)
+                        .c_str());
 
-	ImGui::Separator;
-	ImGui::Text("RGB Light");
+  ImGui::Separator;
+  ImGui::Text("Ambient Strength");
 
-	ImGui::SliderFloat("##R", &renderData.rShader,
-		0.0f, 1.0f);
-	ImGui::SliderFloat("##G", &renderData.gShader,
-		0.0f, 1.0f);
-	ImGui::SliderFloat("##B", &renderData.bShader,
-		0.0f, 1.0f);
+  ImGui::SliderFloat("##AS", &renderData.ambStr, 0.0f, 1.0f);
+  ImGui::Separator;
+  ImGui::Text("RGB Light");
 
-	ImGui::Text("Pos Light");
+  ImGui::SliderFloat("##R", &renderData.rShader, 0.0f, 1.0f);
+  ImGui::SliderFloat("##G", &renderData.gShader, 0.0f, 1.0f);
+  ImGui::SliderFloat("##B", &renderData.bShader, 0.0f, 1.0f);
 
-	ImGui::SliderFloat("##X", &renderData.xLight,
-		-100.0f, 100.0f);
-	ImGui::SliderFloat("##Y", &renderData.yLight,
-		-100.0f, 100.0f);
-	ImGui::SliderFloat("##Z", &renderData.zLight,
-		-100.0f, 100.0f);
+  ImGui::Text("Pos Light");
 
-	ImGui::End();
+  ImGui::SliderFloat("##X", &renderData.xLight, -100.0f, 100.0f);
+  ImGui::SliderFloat("##Y", &renderData.yLight, -100.0f, 100.0f);
+  ImGui::SliderFloat("##Z", &renderData.zLight, -100.0f, 100.0f);
+
+  ImGui::End();
 }
 
 void UserInterface::render() {
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+  ImGui::Render();
+  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
