@@ -105,6 +105,11 @@ void OGLRenderer::draw() {
   glm::mat4 view = glm::mat4(1.0);
 
   if (mRenderData.rdUseChangedShader) {
+    int modelPosLocation =
+        glGetUniformLocation(mChangedShader.GetShaderProgram(), "pos");
+    glUseProgram(mChangedShader.GetShaderProgram());
+    glUniform3f(modelPosLocation, mRenderData.xLight, mRenderData.yLight,
+                mRenderData.zLight);
     mChangedShader.use();
   } else {
     int vertexColorLocation =

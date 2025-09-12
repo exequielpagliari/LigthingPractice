@@ -68,7 +68,7 @@ bool Window::init(unsigned int width, unsigned int height, std::string title) {
 
 void Window::mainLoop() {
   glfwSwapInterval(1);
-  //    mRenderer->uploadData(mModel->getVertexData());
+  mRenderer->uploadData(mModel->getVertexData());
 
   while (!glfwWindowShouldClose(mWindow)) {
     mRenderer->draw();
