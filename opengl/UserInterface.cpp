@@ -84,6 +84,10 @@ void UserInterface::createFrame(OGLRenderData &renderData) {
   ImGui::SameLine();
   ImGui::Text("%s", glm::to_string(renderData.rdCameraWorldPosition).c_str());
   ImGui::Separator();
+  ImGui::Text("Camera Direction:");
+  ImGui::SameLine();
+  ImGui::Text("%s", glm::to_string(renderData.rdCameraWorldDirection).c_str());
+  ImGui::Separator();
   ImGui::Separator();
   static bool checkBoxChecked = false;
   ImGui::Checkbox("Check Me", &checkBoxChecked);
@@ -113,8 +117,12 @@ void UserInterface::createFrame(OGLRenderData &renderData) {
 
   ImGui::Separator;
   ImGui::Text("Ambient Strength");
-
   ImGui::SliderFloat("##AS", &renderData.ambStr, 0.0f, 1.0f);
+
+  ImGui::Separator;
+  ImGui::Text("Specular Strength");
+  ImGui::SliderFloat("##SS", &renderData.spcStr, 0.0f, 1.0f);
+
   ImGui::Separator;
   ImGui::Text("RGB Light");
 

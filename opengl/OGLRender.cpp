@@ -136,6 +136,14 @@ void OGLRenderer::draw() {
   int ambientStrengthShader =
       glGetUniformLocation(mGltfShader.GetShaderProgram(), "ambientStrength");
   glUniform1f(ambientStrengthShader, mRenderData.ambStr);
+  int specStrengthShader =
+      glGetUniformLocation(mGltfShader.GetShaderProgram(), "specularStrength");
+  glUniform1f(specStrengthShader, mRenderData.spcStr);
+  mRenderData.rdCameraWorldDirection = mCamera.mViewDirection;
+  int viewPosInt =
+      glGetUniformLocation(mGltfShader.GetShaderProgram(), "viewPos");
+  glUniform3f(viewPosInt, mCamera.mViewDirection.x, mCamera.mViewDirection.y,
+              mCamera.mViewDirection.z);
   mGltfShader.use();
   mGltfModel->draw();
   mVertexBuffer.unbind();

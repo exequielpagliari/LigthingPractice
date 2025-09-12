@@ -1,5 +1,6 @@
 #pragma once
 #include <GLFW/glfw3.h>
+#include <glm/ext/vector_float3.hpp>
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -39,8 +40,10 @@ struct OGLRenderData {
 
   float rdTickDiff = 0.0f;
   glm::vec3 rdCameraWorldPosition = glm::vec3(0.5f, 0.25f, 1.0f);
+  glm::vec3 rdCameraWorldDirection = glm::vec3(0.0f, 0.0f, 0.0f);
 
   float ambStr = 0.1f;
+  float spcStr = 0.1f;
 
   float rShader = 0.0f;
   float gShader = 0.0f;
