@@ -52,6 +52,7 @@ bool OGLRenderer::init(unsigned int width, unsigned int height) {
   // std::string modelTexFilename = "assets/woman/Woman.png";
   std::string modelFilename = "assets/woman/Woman.gltf";
   std::string modelTexFilename = "assets/woman/Woman.png";
+
   if (!mGltfModel->loadModel(mRenderData, modelFilename, modelTexFilename)) {
     return false;
   }
@@ -104,30 +105,35 @@ void OGLRenderer::draw() {
   float t = glfwGetTime();
   glm::mat4 view = glm::mat4(1.0);
 
-  if (mRenderData.rdUseChangedShader) {
-    int modelPosLocation =
-        glGetUniformLocation(mChangedShader.GetShaderProgram(), "pos");
-    glUseProgram(mChangedShader.GetShaderProgram());
-    glUniform3f(modelPosLocation, mRenderData.xLight, mRenderData.yLight,
-                mRenderData.zLight);
-    mChangedShader.use();
-  } else {
-    int vertexColorLocation =
-        glGetUniformLocation(mShader.GetShaderProgram(), "ourColor");
-    glUseProgram(mShader.GetShaderProgram());
-    glUniform4f(vertexColorLocation, mRenderData.rShader, mRenderData.gShader,
-                mRenderData.bShader, 1.0f);
-    mShader.use();
-  }
   mViewMatrix = mCamera.getViewMatrix(mRenderData) * view;
   mRenderData.rdMatrixGenerateTime = mMatrixGenerateTimer.stop();
   mMatrixUploadTimer.start();
   mUniformBuffer.uploadUboData(mViewMatrix, mProjectionMatrix);
   mRenderData.rdMatrixUploadTime = mMatrixUploadTimer.stop();
 
-  mTex.bind();
-  mVertexBuffer.bind();
-  mVertexBuffer.draw(GL_TRIANGLES, 0, mRenderData.rdTriangleCount);
+  int ligthColorBox =
+      glGetUniformLocation(mShader.GetShaderProgram(), "lightColor");
+  glUseProgram(mShader.GetShaderProgram());
+  glUniform3f(ligthColorBox, mRenderData.rShader, mRenderData.gShader,
+              mRenderData.bShader);
+  int ligthPosLocationBox =
+      glGetUniformLocation(mShader.GetShaderProgram(), "lightPos");
+  glUseProgram(mShader.GetShaderProgram());
+  glUniform3f(ligthPosLocationBox, mRenderData.xLight, mRenderData.yLight,
+              mRenderData.zLight);
+  int ambientStrengthShaderBox =
+      glGetUniformLocation(mShader.GetShaderProgram(), "ambientStrength");
+  glUniform1f(ambientStrengthShaderBox, mRenderData.ambStr);
+  int specStrengthShaderBox =
+      glGetUniformLocation(mShader.GetShaderProgram(), "specularStrength");
+  glUniform1f(specStrengthShaderBox, mRenderData.spcStr);
+  mRenderData.rdCameraWorldDirection = mCamera.mViewDirection;
+  int viewPosIntBox =
+      glGetUniformLocation(mShader.GetShaderProgram(), "viewPos");
+  glUniform3f(viewPosIntBox, mRenderData.rdCameraWorldPosition.x,
+              mRenderData.rdCameraWorldPosition.y,
+              mRenderData.rdCameraWorldPosition.z);
+
   int ligthColor =
       glGetUniformLocation(mGltfShader.GetShaderProgram(), "lightColor");
   glUseProgram(mGltfShader.GetShaderProgram());
@@ -147,8 +153,25 @@ void OGLRenderer::draw() {
   mRenderData.rdCameraWorldDirection = mCamera.mViewDirection;
   int viewPosInt =
       glGetUniformLocation(mGltfShader.GetShaderProgram(), "viewPos");
-  glUniform3f(viewPosInt, mCamera.mViewDirection.x, mCamera.mViewDirection.y,
-              mCamera.mViewDirection.z);
+  glUniform3f(viewPosInt, mRenderData.rdCameraWorldPosition.x,
+              mRenderData.rdCameraWorldPosition.y,
+              mRenderData.rdCameraWorldPosition.z);
+  int modelPosLocation =
+      glGetUniformLocation(mChangedShader.GetShaderProgram(), "pos");
+  glUseProgram(mChangedShader.GetShaderProgram());
+  glUniform3f(modelPosLocation, mRenderData.xLight, mRenderData.yLight,
+              mRenderData.zLight);
+
+  mChangedShader.use();
+  mTex.bind();
+  mVertexBuffer.bind();
+  mVertexBuffer.draw(GL_TRIANGLES, 0, mRenderData.rdTriangleCount);
+
+  mShader.use();
+  mTex.bind();
+  mVertexBuffer.bind();
+  mVertexBuffer.draw(GL_TRIANGLES, 0, mRenderData.rdTriangleCount);
+
   mGltfShader.use();
   mGltfModel->draw();
   mVertexBuffer.unbind();
