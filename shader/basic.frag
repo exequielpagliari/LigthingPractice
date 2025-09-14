@@ -3,9 +3,7 @@ layout (location = 0) in vec3 normal;
 layout (location = 1) in vec3 FragPos;
 
 out vec4 FragColor;
-uniform vec4 ourColor;
 
-uniform sampler2D Tex;
 
 uniform float ambientStrength = 0.1;
 uniform float specularStrength = 0.1;

@@ -34,12 +34,12 @@ void Model::init() {
   mVertexData.vertices[10].position = glm::vec3(0.5f, 0.5f, -0.5f);
   mVertexData.vertices[11].position = glm::vec3(0.5f, -0.5f, -0.5f);
 
-  mVertexData.vertices[6].normal = glm::vec3(0.0f, 0.0, 1.0f);
-  mVertexData.vertices[7].normal = glm::vec3(0.0f, 0.0, 1.0f);
-  mVertexData.vertices[8].normal = glm::vec3(0.0f, 0.0, 1.0f);
-  mVertexData.vertices[9].normal = glm::vec3(0.0f, 0.0, 1.0f);
-  mVertexData.vertices[10].normal = glm::vec3(0.0f, 0.0, 1.0f);
-  mVertexData.vertices[11].normal = glm::vec3(0.0f, 0.0, 1.0f);
+  mVertexData.vertices[6].normal = glm::vec3(0.0f, 0.0, -1.0f);
+  mVertexData.vertices[7].normal = glm::vec3(0.0f, 0.0, -1.0f);
+  mVertexData.vertices[8].normal = glm::vec3(0.0f, 0.0, -1.0f);
+  mVertexData.vertices[9].normal = glm::vec3(0.0f, 0.0, -1.0f);
+  mVertexData.vertices[10].normal = glm::vec3(0.0f, 0.0, -1.0f);
+  mVertexData.vertices[11].normal = glm::vec3(0.0f, 0.0, -1.0f);
 
   mVertexData.vertices[6].uv = glm::vec2(1.0, 0.0);
   mVertexData.vertices[7].uv = glm::vec2(1.0, 1.0);
@@ -56,12 +56,12 @@ void Model::init() {
   mVertexData.vertices[16].position = glm::vec3(-0.5f, 0.5f, -0.5f);
   mVertexData.vertices[17].position = glm::vec3(-0.5f, -0.5f, -0.5f);
 
-  mVertexData.vertices[12].normal = glm::vec3(1.0f, 0.0f, 0.0f);
-  mVertexData.vertices[13].normal = glm::vec3(1.0f, 0.0f, 0.0f);
-  mVertexData.vertices[14].normal = glm::vec3(1.0f, 0.0f, 0.0f);
-  mVertexData.vertices[15].normal = glm::vec3(1.0f, 0.0f, 0.0f);
-  mVertexData.vertices[16].normal = glm::vec3(1.0f, 0.0f, 0.0f);
-  mVertexData.vertices[17].normal = glm::vec3(1.0f, 0.0f, 0.0f);
+  mVertexData.vertices[12].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
+  mVertexData.vertices[13].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
+  mVertexData.vertices[14].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
+  mVertexData.vertices[15].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
+  mVertexData.vertices[16].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
+  mVertexData.vertices[17].normal = glm::vec3(-1.0f, 0.0f, 0.0f);
 
   mVertexData.vertices[12].uv = glm::vec2(1.0, 0.0);
   mVertexData.vertices[13].uv = glm::vec2(1.0, 1.0);
@@ -122,12 +122,12 @@ void Model::init() {
   mVertexData.vertices[34].position = glm::vec3(-0.5f, -0.5f, -0.5f);
   mVertexData.vertices[35].position = glm::vec3(0.5f, -0.5f, -0.5f);
 
-  mVertexData.vertices[30].normal = glm::vec3(0.0f, 1.0f, 0.0f);
-  mVertexData.vertices[31].normal = glm::vec3(0.0f, 1.0f, 0.0f);
-  mVertexData.vertices[32].normal = glm::vec3(0.0f, 1.0f, 0.0f);
-  mVertexData.vertices[33].normal = glm::vec3(0.0f, 1.0f, 0.0f);
-  mVertexData.vertices[34].normal = glm::vec3(0.0f, 1.0f, 0.0f);
-  mVertexData.vertices[35].normal = glm::vec3(0.0f, 1.0f, 0.0f);
+  mVertexData.vertices[30].normal = glm::vec3(0.0f, -1.0f, 0.0f);
+  mVertexData.vertices[31].normal = glm::vec3(0.0f, -1.0f, 0.0f);
+  mVertexData.vertices[32].normal = glm::vec3(0.0f, -1.0f, 0.0f);
+  mVertexData.vertices[33].normal = glm::vec3(0.0f, -1.0f, 0.0f);
+  mVertexData.vertices[34].normal = glm::vec3(0.0f, -1.0f, 0.0f);
+  mVertexData.vertices[35].normal = glm::vec3(0.0f, -1.0f, 0.0f);
 
   mVertexData.vertices[30].uv = glm::vec2(0.0, 1.0);
   mVertexData.vertices[31].uv = glm::vec2(0.0, 0.0);

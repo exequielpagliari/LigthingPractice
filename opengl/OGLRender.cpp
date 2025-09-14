@@ -173,7 +173,7 @@ void OGLRenderer::draw() {
   mVertexBuffer.draw(GL_TRIANGLES, 0, mRenderData.rdTriangleCount);
 
   mGltfShader.use();
-  mGltfModel->draw();
+  // mGltfModel->draw();
   mVertexBuffer.unbind();
   mTex.unbind();
   mFramebuffer.unbind();
