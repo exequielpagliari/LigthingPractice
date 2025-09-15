@@ -10,7 +10,7 @@ La librería utilizada será Assimp.
 
 Básicamente, el flujo de carga es el siguiente:
 
-```
+```mermaid
 flowchart TD
     A[Proceso de Carga de Archivo 3D a GPU] --> B(Carga de Archivo por la librería)
     B --> C(Creación del Array de Vértices)
