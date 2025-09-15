@@ -48,6 +48,7 @@ bool OGLRenderer::init(unsigned int width, unsigned int height) {
   glLineWidth(3.0);
 
   mGltfModel = std::make_shared<GltfModel>();
+  mAssimpModel = std::make_shared<AssimpModel>();
   // std::string modelFilename = "assets/woman/Woman.gltf";
   // std::string modelTexFilename = "assets/woman/Woman.png";
   std::string modelFilename = "assets/woman/Woman.gltf";
@@ -56,7 +57,13 @@ bool OGLRenderer::init(unsigned int width, unsigned int height) {
   if (!mGltfModel->loadModel(mRenderData, modelFilename, modelTexFilename)) {
     return false;
   }
+
+  if (!mAssimpModel->loadModel(mRenderData, modelFilename)) {
+    return false;
+  }
+
   mGltfModel->uploadIndexBuffer();
+  mAssimpModel->createVertexBuffers();
 
   mUniformBuffer.init();
   Logger::log(1, "%s: uniform buffer successfully created\n", __FUNCTION__);
@@ -170,10 +177,10 @@ void OGLRenderer::draw() {
   mShader.use();
   mTex.bind();
   mVertexBuffer.bind();
-  mVertexBuffer.draw(GL_TRIANGLES, 0, mRenderData.rdTriangleCount);
+  //  mVertexBuffer.draw(GL_TRIANGLES, 0, mRenderData.rdTriangleCount);
 
   mGltfShader.use();
-  // mGltfModel->draw();
+  mGltfModel->draw();
   mVertexBuffer.unbind();
   mTex.unbind();
   mFramebuffer.unbind();

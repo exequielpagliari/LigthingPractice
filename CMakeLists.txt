@@ -20,14 +20,17 @@ file(GLOB SOURCES
   imgui/*.cpp
   tinygltf/*.cc
 )
-add_executable(Main ${SOURCES} "opengl/UniformBuffer.h" "opengl/UniformBuffer.cpp" "opengl/UserInterface.h" "opengl/UserInterface.cpp" "tools/Timer.h" "tools/Timer.cpp" "tools/Camera.h" "tools/Camera.cpp" "model/GltfModel.h" "model/GltfModel.cpp")
+add_executable(Main ${SOURCES} "opengl/UniformBuffer.h" "opengl/UniformBuffer.cpp" "opengl/UserInterface.h" "opengl/UserInterface.cpp" "tools/Timer.h" "tools/Timer.cpp" "tools/Camera.h" "tools/Camera.cpp" "model/GltfModel.h" "model/GltfModel.cpp"
+        model/Mesh.cpp
+        model/Mesh.h)
 
-target_include_directories(Main PUBLIC include src window tools opengl model imgui tinygltf)
+target_include_directories(Main PUBLIC include src window tools opengl model imgui tinygltf )
 
 find_package(glfw3 3.3 REQUIRED)
 set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL REQUIRED)
 find_package(glm REQUIRED)
+find_package(assimp REQUIRED)
 
 # copy shader files
 file(GLOB GLSL_SOURCE_FILES
@@ -85,11 +88,18 @@ if(UNIX)
   set(GLFW3_LIBRARY glfw)
 endif()
 
-include_directories(${GLFW3_INCLUDE_DIR} ${GLM_INCLUDE_DIR})
+include_directories(${GLFW3_INCLUDE_DIR} ${GLM_INCLUDE_DIR} ${ASSIMP_INCLUDE_DIR})
+
+# FindAssimp.cmake sets ASSIMP_LIBRARY and ASSIMP_ZLIB_LIBRARY/FindGLFW3 set GLF3_LIBRARY under Windows, reuse the value for Linux
+if(UNIX)
+  set(ASSIMP_LIBRARY assimp)
+  set(ASSIMP_ZLIB_LIBRARY z)
+  set(GLFW3_LIBRARY glfw)
+endif()
 
 if(MSVC)
-  target_link_libraries(Main ${GLFW3_LIBRARY} OpenGL::GL)
+  target_link_libraries(Main ${GLFW3_LIBRARY} ${ASSIMP_LIBRARY} ${ASSIMP_ZLIB_LIBRARY} OpenGL::GL)
 else()
   # Clang and GCC may need libstd++ and libmath
-  target_link_libraries(Main ${GLFW3_LIBRARY} OpenGL::GL stdc++ m)
+  target_link_libraries(Main ${GLFW3_LIBRARY} ${ASSIMP_LIBRARY} ${ASSIMP_ZLIB_LIBRARY} OpenGL::GL stdc++ m)
 endif()

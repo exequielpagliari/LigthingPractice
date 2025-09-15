@@ -14,6 +14,7 @@
 #include "Timer.h"
 #include "Camera.h"
 #include "GltfModel.h"
+#include "AssimpModel.h"
 
 
 class OGLRenderer {
@@ -33,10 +34,12 @@ private:
 	Shader mChangedShader{};
 	Shader mGltfShader{};
 	std::shared_ptr<GltfModel> mGltfModel = nullptr;
+	std::shared_ptr<AssimpModel> mAssimpModel= nullptr;
 
 	Framebuffer mFramebuffer{};
 	VertexBuffer mVertexBuffer{};
 	Texture mTex{};
+	Texture mTexA{};
 	UniformBuffer mUniformBuffer{};
 	OGLRenderData mRenderData{};
 	UserInterface mUserInterface{};

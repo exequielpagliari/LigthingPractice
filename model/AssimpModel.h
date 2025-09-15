@@ -1,31 +1,40 @@
 #pragma once
-#include "OGLRenderData.h"
-#include "Texture.h"
+
+#include <glad/glad.h>
+
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
-#include <glad/glad.h>
 #include <memory>
 #include <string>
-#include <tiny_gltf.h>
 #include <vector>
+#include <map>
+#include "OGLRenderData.h"
+#include "Texture.h"
+#include "Mesh.h"
+
+using namespace  std;
+
 
 class AssimpModel {
 public:
-  bool loadModel(OGLRenderData &renderData, std::string modelFilename);
-  void draw();
-  void cleanup();
-  void uploadVertexBuffers();
-  void uploadIndexBuffer();
-
+    bool loadModel(OGLRenderData& renderData, std::string modelFilename);
+    void Draw(Shader &shader);
 private:
-  void createVertexBuffers();
-  void createIndexBuffer();
-  int getTriangleCount();
-  GLuint mVAO = 0;
-  std::vector<GLuint> mVertexVBO{};
-  GLuint mIndexVBO = 0;
-  std::map<std::string, GLint> attributes = {
-      {"POSITION", 0}, {"NORMAL", 1}, {"TEXCOORD_0", 2}};
-  Texture mTex{};
+
+    // model data
+    vector<Vertex> vertices;
+    vector<unsigned int> indices;
+    string directory;
+
+    GLuint mVAO = 0;
+    std::vector<GLuint> mVertexVBO{};
+    GLuint mVBO = 0;
+    GLuint mEBO;
+    GLuint mIndexVBO = 0;
+
+
+    void processMesh(const aiScene *scene);
+    void createVertexBuffers();
+
 };
