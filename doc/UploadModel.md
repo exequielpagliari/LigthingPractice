@@ -30,3 +30,19 @@ flowchart TD
     O --> P(Reinicio del Modelo)
 
 ```
+
+## 2) Generación de Array de Vértices 
+
+glGenVertexArrays( GLsizei n, GLuint *arrays)
+
+Parametros:
+n - Representa el número específico de nombres de arrays a generar.
+
+arrays - Específica cual es el array de vértices generado.
+
+
+Descripción
+glGenVertexArrays Devuelve n nombres de objetos de matriz de vértices en matrices. No se garantiza que los nombres formen un conjunto contiguo de enteros; sin embargo, se garantiza que ninguno de los nombres devueltos estaba en uso inmediatamente antes de la llamada a glGenVertexArrays. 
+
+[glVertexArray](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenVertexArrays.xhtml)
+
