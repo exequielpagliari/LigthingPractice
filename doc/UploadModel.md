@@ -99,3 +99,73 @@ glBindVertexArray vincula el objeto de matriz de vértices con el nombre array. 
 
 [glBindVertexArray](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glBindVertexArray.xhtml)
 
+
+## 3) Separación de información de Vértice
+
+Se plantea una estructura de vértice:
+```cpp
+struct OGLVertex {
+  glm::vec3 position;
+  glm::vec3 normal;
+  glm::vec2 uv;
+};
+
+```
+
+Y estructura de malla:
+
+```cpp
+struct OGLMesh {
+  std::vector<OGLVertex> vertices;
+};
+
+```
+
+Método simplificado de carga (ChatGPT)```cpp
+
+std::vector<Vertex> vertices;
+std::vector<unsigned int> indices;
+
+aiMesh* mesh = scene->mMeshes[0]; // Ejemplo: primera malla
+
+for (unsigned int v = 0; v < mesh->mNumVertices; v++) {
+    Vertex vertex{};
+    vertex.position = { mesh->mVertices[v].x, mesh->mVertices[v].y, mesh->mVertices[v].z };
+    vertex.normal   = mesh->HasNormals() ? 
+                      glm::vec3(mesh->mNormals[v].x, mesh->mNormals[v].y, mesh->mNormals[v].z) :
+                      glm::vec3(0.0f);
+
+    if (mesh->HasTextureCoords(0)) {
+        vertex.texCoords = { mesh->mTextureCoords[0][v].x, mesh->mTextureCoords[0][v].y };
+    } else {
+        vertex.texCoords = { 0.0f, 0.0f };
+    }
+
+    vertices.push_back(vertex);
+}
+
+for (unsigned int f = 0; f < mesh->mNumFaces; f++) {
+    aiFace face = mesh->mFaces[f];
+    for (unsigned int i = 0; i < face.mNumIndices; i++) {
+        indices.push_back(face.mIndices[i]);
+    }
+}
+
+
+```
+
+glGenBuffers(
+GLsizei n,
+GLuint * buffers);
+
+Parametros:
+n - Representa el número específico de nombres de buffer a generar.
+
+Buffer- Específica cual es el array de vértices generado.
+
+
+Descripción
+glGenBuffers especifica una matriz en la que se almacenan las referencias de los objetos de búfer generados.
+
+[glGenBuffers](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenBuffers.xhtml)
+
