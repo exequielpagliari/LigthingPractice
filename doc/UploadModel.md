@@ -121,7 +121,9 @@ struct OGLMesh {
 
 ```
 
-Método simplificado de carga (ChatGPT)```cpp
+Método simplificado de carga (ChatGPT)
+
+```cpp
 
 std::vector<Vertex> vertices;
 std::vector<unsigned int> indices;
