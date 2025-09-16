@@ -60,6 +60,17 @@ void loadModel(string path)
 
 ## 2) Generación de Array de Vértices 
 
+Método de generación de Array de Vértices
+```cpp
+
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	creacionBuffersVertices();
+	creacionBufferIndices();
+	glBindVertexArray(0);
+
+```
+
 glGenVertexArrays( GLsizei n, GLuint *arrays)
 
 Parametros:
@@ -74,9 +85,9 @@ glGenVertexArrays Devuelve n nombres de objetos de matriz de vértices en matric
 [glVertexArray](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenVertexArrays.xhtml)
 
 
-glBindVertexArray(GLuint  *array)
+glBindVertexArray( GLuint  *array)
 
-array Específica el valor que matriz a vincular.
+array - Específica el valor que matriz a vincular.
 
 Descripción
 glBindVertexArray vincula el objeto de matriz de vértices con el nombre array. array es el nombre de un objeto de matriz de vértices devuelto previamente por una llamada a glGenVertexArrays, o cero para romper la vinculación existente.
