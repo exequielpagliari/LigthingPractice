@@ -11,23 +11,28 @@ La librería utilizada será Assimp.
 Básicamente, el flujo de carga es el siguiente:
 
 ```mermaid
+---
+config:
+  layout: dagre
+---
 flowchart TD
-    A[Proceso de Carga de Archivo 3D a GPU] --> B(Carga de Archivo por la librería)
-    B --> C(Creación del Array de Vértices)
-    C --> D(Separación de información de Vértice )
-    D --> E(Creación de Buffer)
-    E --> F(Pasar Artributos de vértices)
-    F --> G(Crear índice de Buffers)
-    G --> H(Cargar Buffer de vertices)
-    H --> I(Cargar índice de Buffer)
-    I --> J(Dibujado)
-    J --> K(Bind de Textura)
-    K --> L(Seleccionar Buffer)
-    L --> J(Dibujar)
-    J --> M(Limpieza)
-    M --> N(Destrucción de los Buffers)
-    N --> O(Destrucción de la Textura)
-    O --> P(Reinicio del Modelo)
+    A["Proceso de Carga de Archivo 3D a GPU"] --> B("Carga de Archivo por la librería")
+    B --> C("Creación del Array de Vértices")
+    C --> D("Separación de información de Vértice")
+    D --> E("Creación de Buffer")
+    E --> F("Pasar Artributos de vértices")
+    F --> G("Crear índice de Buffers")
+    G --> H("Cargar Buffer de vertices")
+    H --> I("Cargar índice de Buffer")
+    I --> J("Dibujado")
+    J --> K("Bind de Textura") & M("Limpieza")
+    K --> L("Seleccionar Buffer")
+    L --> Y("Dibujar")
+    Y --> J
+    M --> N("Destrucción de los Buffers")
+    N --> O("Destrucción de la Textura")
+    O --> P("Reinicio del Modelo")
+
 
 ```
 ## 1) Carga de Archivo por la librería
