@@ -174,19 +174,20 @@ Métodos utilizados para la creación de los buffers.
 
 
 ### glGenBuffers
-```
+
+```cpp
 glGenBuffers(
 GLsize n,
 GLuint * buffers);
 ```
 
-Parametros:
+**Parametros:** 
 n - Representa el número específico de nombres de buffer a generar.
 
 Buffer- Específica cual es el array de vértices generado.
 
 
-Descripción
+**Descripción:** 
 glGenBuffers especifica una matriz en la que se almacenan las referencias de los objetos de búfer generados.
 
 [glGenBuffers](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenBuffers.xhtml)
@@ -194,22 +195,91 @@ glGenBuffers especifica una matriz en la que se almacenan las referencias de los
 
 ### glBindBuffer
 
-```
+```cpp
 void glBindBuffer(
 GLenum target,
 GLuint buffer);
 ```
 
 
-Parametros:
+**Parametros:** 
 target - Especifica el objetivo al que está vinculado el objeto de búfer; dicho objetivo debe ser uno de los objetivos de vinculación de búfer.
 
 buffer- Específica cual es el array de vértices.
 
 
-Descripción
+**Descripción:** 
 glBindBuffer asocia un objeto de búfer a un punto de enlace específico. Al llamar a glBindBuffer, indicando como parámetro target una de las constantes simbólicas permitidas y como parámetro buffer el nombre de un objeto de búfer, se establece la asociación entre ese objeto y el punto de enlace. Si no existe ningún objeto de búfer con ese nombre, se crea uno nuevo. Cuando se asocia un objeto de búfer a un punto de enlace, la asociación previa con ese punto de enlace se anula automáticamente.
 
 [glBindBuffer](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glBindBuffer.xhtml)
 
+### glVertexAttribPointer
+```cpp
+void glVertexAttribPointer(
+GLuint index, 
+GLint size, 
+GLenum type, 
+GLboolean normalized, 
+GLsizei stride, 
+const void * pointer);
+ 
+void glVertexAttribIPointer(
+GLuint index, 
+GLint size, 
+GLenum type, 
+GLsizei stride, 
+const void * pointer);
+ 
+void glVertexAttribLPointer(
+GLuint index, 
+GLint size, 
+GLenum type, 
+GLsizei stride, 
+const void * pointer);
+```
+**Parametros**
+index
+Especifica el índice del atributo genérico de vértice que se va a modificar.
+size
+Especifica el número de componentes por atributo genérico de vértice.
+type
+Especifica el tipo de datos de cada componente del array. 
+stride
+Especifica el desplazamiento en bytes entre los atributos genéricos de vértice consecutivos.
+pointer
+Especifica el desplazamiento del primer componente del primer atributo genérico de vértice en el array, ubicado en el almacenamiento de datos del búfer actualmente vinculado al objetivo GL_ARRAY_BUFFER.
+
+**Descripción**
+Las funciones glVertexAttribPointer, glVertexAttribIPointer y glVertexAttribLPointer especifican la ubicación y el formato de datos del array de atributos de vértice genéricos en el índice especificado, que se utilizará durante el proceso de renderizado. El parámetro size indica el número de componentes por atributo y debe ser 1, 2, 3, 4 o GL_BGRA. El parámetro type especifica el tipo de datos de cada componente, y stride indica el desplazamiento en bytes entre un atributo y el siguiente, lo que permite almacenar los vértices y los atributos en un único array o en arrays separados.
+
+[glVertexAttribPointer](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glVertexAttribPointer.xhtml)
+
+
+### glEnableVertexAttribArray
+```cpp
+void glEnableVertexAttribArray(
+GLuint index);
+ 
+void glDisableVertexAttribArray(
+GLuint index);
+ 
+void glEnableVertexArrayAttrib(
+GLuint vaobj,
+ GLuint index);
+ 
+void glDisableVertexArrayAttrib(
+GLuint vaobj,
+ GLuint index);
+```
+
+**Parámetros:** 
+vaobj
+Especifica el nombre del objeto de matriz de vértices para las funciones glDisableVertexArrayAttrib y glEnableVertexArrayAttrib.
+index
+Especifica el índice del atributo genérico de vértice que se habilitará o deshabilitará.
+
+**Descripción:** 
+Las funciones glEnableVertexAttribArray y glEnableVertexArrayAttrib habilitan el array de atributos de vértice genérico especificado por índice. La función glEnableVertexAttribArray utiliza el objeto de array de vértices actualmente enlazado para la operación, mientras que glEnableVertexArrayAttrib actualiza el estado del objeto de array de vértices con el ID vaobj.
+
+[glEnableVertexAttribArray](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glEnableVertexAttribArray.xhtml)
 
