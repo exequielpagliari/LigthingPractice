@@ -121,7 +121,7 @@ struct OGLMesh {
 
 ```
 
-Método simplificado de carga (ChatGPT)
+Método simplificado de carga (ChatGPT)
 
 ```cpp
 
@@ -156,9 +156,29 @@ for (unsigned int f = 0; f < mesh->mNumFaces; f++) {
 
 ```
 
+## 4) Creación de Buffers Vértices
+
+Métodos utilizados para la creación de los buffers.
+
+```cpp
+
+		std::vector<GLuint> mVertexVBO{};
+		glGenBuffers(1, &VertexVBO[attributes[attribType]]);
+		glBindBuffer(GL_ARRAY_BUFFER,
+			mVertexVBO[attributes[attribType]]);
+		glVertexAttribPointer(attributes[attribType], dataSize,
+			dataType, GL_FALSE, 0, (void*)0);
+		glEnableVertexAttribArray(attributes[attribType]);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+```
+
+
+### glGenBuffers
+```
 glGenBuffers(
-GLsizei n,
+GLsize n,
 GLuint * buffers);
+```
 
 Parametros:
 n - Representa el número específico de nombres de buffer a generar.
@@ -170,4 +190,26 @@ Descripción
 glGenBuffers especifica una matriz en la que se almacenan las referencias de los objetos de búfer generados.
 
 [glGenBuffers](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGenBuffers.xhtml)
+
+
+### glBindBuffer
+
+```
+void glBindBuffer(
+GLenum target,
+GLuint buffer);
+```
+
+
+Parametros:
+target - Especifica el objetivo al que está vinculado el objeto de búfer; dicho objetivo debe ser uno de los objetivos de vinculación de búfer.
+
+buffer- Específica cual es el array de vértices.
+
+
+Descripción
+glBindBuffer asocia un objeto de búfer a un punto de enlace específico. Al llamar a glBindBuffer, indicando como parámetro target una de las constantes simbólicas permitidas y como parámetro buffer el nombre de un objeto de búfer, se establece la asociación entre ese objeto y el punto de enlace. Si no existe ningún objeto de búfer con ese nombre, se crea uno nuevo. Cuando se asocia un objeto de búfer a un punto de enlace, la asociación previa con ese punto de enlace se anula automáticamente.
+
+[glBindBuffer](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glBindBuffer.xhtml)
+
 
