@@ -166,10 +166,7 @@ Métodos utilizados para la creación de los buffers.
 		glGenBuffers(1, &VertexVBO[attributes[attribType]]);
 		glBindBuffer(GL_ARRAY_BUFFER,
 			mVertexVBO[attributes[attribType]]);
-		glVertexAttribPointer(attributes[attribType], dataSize,
-			dataType, GL_FALSE, 0, (void*)0);
-		glEnableVertexAttribArray(attributes[attribType]);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 ```
 
 
@@ -212,6 +209,17 @@ buffer- Específica cual es el array de vértices.
 glBindBuffer asocia un objeto de búfer a un punto de enlace específico. Al llamar a glBindBuffer, indicando como parámetro target una de las constantes simbólicas permitidas y como parámetro buffer el nombre de un objeto de búfer, se establece la asociación entre ese objeto y el punto de enlace. Si no existe ningún objeto de búfer con ese nombre, se crea uno nuevo. Cuando se asocia un objeto de búfer a un punto de enlace, la asociación previa con ese punto de enlace se anula automáticamente.
 
 [glBindBuffer](https://registry.khronos.org/OpenGL-Refpages/gl4/html/glBindBuffer.xhtml)
+
+## 5) Cargar Buffer de vertices
+
+```cpp
+
+		glVertexAttribPointer(attributes[attribType], dataSize,
+			dataType, GL_FALSE, 0, (void*)0);
+		glEnableVertexAttribArray(attributes[attribType]);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+```
 
 ### glVertexAttribPointer
 ```cpp
